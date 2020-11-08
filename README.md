@@ -3,7 +3,7 @@ SQL Data Api client for Python
 
 ### Usage
 
-> pip install sql_data_api_client
+> pip install SqlDataApi
 
 ```py
 import SqlDataApi as sql
