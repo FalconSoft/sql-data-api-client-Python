@@ -1,34 +1,34 @@
-"""Setup script for sql-data-api-client"""
+"""
+Setup script for sql-data-api-client
+"""
+import setuptools
 
-import os.path
-from setuptools import setup
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
-# The directory containing this file
-HERE = os.path.abspath(os.path.dirname(__file__))
-
-# The text of the README file
-with open(os.path.join(HERE, "README.md")) as fid:
-    README = fid.read()
-
-# This call to setup() does all the work
-setup(
-    name="sql-data-api-client",
-    version="1.0.0",
-    description="Python SQL Data Api client",
-    long_description=README,
-    long_description_content_type="text/markdown",
-    url="https://github.com/FalconSoft/sql-data-api-client-Python",
+setuptools.setup(
+    name="SqlDataApi",
+    version="0.1.7",
     author="FalconSoft Ltd",
     author_email="ppaska@falconsoft-ltd.com",
-    license="MIT",
+    description="Python library for Sql Data Api",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/FalconSoft/sql-data-api-client-Python",
+    packages=setuptools.find_packages(),
     classifiers=[
+        "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3"
+        "Operating System :: OS Independent",
     ],
-    packages=["sql_data_api"],
-    include_package_data=True,
-    install_requires=[
-        "requests", "json"
-    ],
-    entry_points={"console_scripts": ["sql-data-api-client=sql_data_api.__main__:main"]}
+    python_requires='>=3.6',
 )
+
+"""
+## to publish new version
+1:/> python setup.py sdist bdist_wheel
+2:/> python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+
+https://pypi.org/project/SqlDataApi
+
+"""
