@@ -27,6 +27,9 @@ class SqlDataApi:
             SqlDataApi._auth_token
         )
 
+        if type(items) is str:
+            items = json.loads(items)
+
         data_tables = self._array_to_tables(items, batchsize)
 
         commit_status = {
@@ -52,7 +55,7 @@ class SqlDataApi:
                 commit_status["updated"] += res["updated"]
                 commit_status["deleted"] += res["deleted"]
             else:
-                err_msg = response.json().get('Message') or "Unknown response. StatusCode:{0}, content: {1}".format(response.status_code, response.content)
+                err_msg = "Unknown response. StatusCode:{0}, content: {1}".format(response.status_code, response.content) or response.json().get('Message')
                 print("Server error status_code: %s, message : %s, ", str(response.status_code), err_msg)
                 if response.status_code == 401:
                     raise NameError('Authorization has been denied for this request. Please provide valid token')
@@ -94,8 +97,11 @@ class SqlDataApi:
 
         if response.status_code == 200:
             return  self._table_to_array(response.json()['table'])
-        
-        raise NameError(response.json()['Message'])
+
+        err_msg = "Unknown response. StatusCode:{0}, content: {1}".format(response.status_code, response.content) or response.json().get('Message')
+        print("Server error status_code: %s, message : %s, ", str(response.status_code), err_msg)
+
+        raise NameError(err_msg)
 
     def _run_query(self, table_name, **kwargs):
         url = "{}/sql-data-api/{}/query/{}?$accessToken={}".format(
@@ -125,7 +131,10 @@ class SqlDataApi:
         if response.status_code == 200:
             return response.json()
         
-        raise NameError(response.json()['Message'])
+        err_msg = "Unknown response. StatusCode:{0}, content: {1}".format(response.status_code, response.content) or response.json().get('Message')
+        print("Server error status_code: %s, message : %s, ", str(response.status_code), err_msg)
+
+        raise NameError(err_msg)
     
     def _table_to_array(self, table):
         result = []

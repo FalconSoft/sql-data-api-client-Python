@@ -26,6 +26,27 @@ print(status)
 # execute stored procedure
 sp_res = sql.SqlDataApi("northwind-db-connection").execute_sp_to_array("northwind.NorthwindEmployeesSummary", {'startDate': "2019-01-01", 'endDate': "2020-05-14"})
 print(sp_res)
+
+
+"""
+result = sql.SqlDataApi("SQL-Shared").run_query_to_array("test1.Sample100",
+    filter="country = @country",
+    filter_params={"country": "UK"}
+)
+
+# load to frame
+dataFrame = pd.DataFrame.from_records(result)
+
+# manipulate dataFrame here ...
+
+listOfItems = json.loads(dataFrame.to_json(orient='records'))
+
+# save data
+status = sql.SqlDataApi("SQL-Shared").save_array("test1.Sample100", listOfItems)
+print(status)
+"""
+
+
 ```
 
 ### License

@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="SqlDataApi",
-    version="0.1.8",
+    version="0.1.9",
     author="FalconSoft Ltd",
     author_email="ppaska@falconsoft-ltd.com",
     description="Python library for Sql Data Api",
