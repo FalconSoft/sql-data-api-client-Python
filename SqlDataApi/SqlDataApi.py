@@ -2,6 +2,7 @@ import json
 import requests
 import math
 import datetime as datetime
+import pandas as pd
 
 class SqlDataApi:
 
@@ -183,11 +184,13 @@ class SqlDataApi:
                     .format(column_name, column_names, item.keys(), item))
                     raise NameError("Can't find column '{0}' in a row".format(column_name))
 
-                if type(value) is datetime.datetime:
+                if type(value) is pd.pandas.Timestamp:
+                    row.append(value.strftime("%Y-%m-%d %H:%M:%S"))
+                elif type(value) is datetime.datetime:
                     row.append(value.strftime("%Y-%m-%d %H:%M:%S"))
                 elif type(value) is datetime.date:
                     row.append(value.strftime("%Y-%m-%d"))
-                elif  str(value) == 'null' or str(value) == 'nan':
+                elif  str(value) == 'null' or str(value) == 'nan' or str(value) == 'NaT' or pd.isnull(value):
                     row.append(None)
                 else:
                     row.append(value)
