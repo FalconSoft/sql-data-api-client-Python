@@ -3,6 +3,7 @@ import requests
 import math
 import datetime as datetime
 import pandas as pd
+from dateutil import parser
 
 class SqlDataApi:
 
@@ -150,7 +151,7 @@ class SqlDataApi:
                 if column_type != 'DateTime' or row[column_index] == None:
                     item[column_name] = row[column_index]
                 else:
-                    item[column_name] = datetime.datetime.strptime(row[column_index],"%Y-%m-%dT%H:%M:%S")
+                    item[column_name] =  parser.parse(row[column_index])
 
             result.append(item)
 
@@ -202,7 +203,7 @@ class SqlDataApi:
             # if content is more than ~2m then we would create another table
             if content_size >= 1750000 or len(table["rows"]) > max_batchsize:
                 result_tables.append(table)
-                content_size = header_size;
+                content_size = header_size
                 table = {
                     'fieldNames': column_names,
                     'rows': []
