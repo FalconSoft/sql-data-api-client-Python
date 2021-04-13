@@ -148,7 +148,7 @@ class SqlDataApi:
                 column_name = table['fieldNames'][column_index]
                 column_type = table['fieldDataTypes'][column_index]
 
-                if column_type != 'DateTime' or row[column_index] == None:
+                if (column_type != 'DateTime' and column_type != 'Date') or row[column_index] == None:
                     item[column_name] = row[column_index]
                 else:
                     item[column_name] =  parser.parse(row[column_index])
